@@ -18,7 +18,9 @@ use_swap = yes_no_dialog(f"We detected {ram} MiB of RAM, should we create a swap
 
 fw_interface = get_firmware_interface()
 
-swap_end = int(ram)
+swap_end = 5000
+
+linux_root_end = 260000
 
 if(fw_interface == "BIOS"):
   swap_end += 101 # 100 MiB
@@ -50,7 +52,7 @@ else: # UEFI
       mkpart primary fat32 1MiB 261MiB \
       set 1 esp on \
       mkpart primary linux-swap 261MiB {swap_end}MiB \
-      mkpart primary ext4 {swap_end}MiB 100%""")
+      mkpart primary ext4 {swap_end}MiB {linux_root_end}""")
   else:
     os.system(f"""
       parted --script {disk} \
