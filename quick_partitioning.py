@@ -35,14 +35,14 @@ if(fw_interface == "BIOS"):
       mkpart primary ext4 1MiB 101MiB \
       set 1 boot on \
       mkpart primary linux-swap 101MiB {swap_end}MiB \
-      mkpart primary ext4 {swap_end}MiB 100%""")
+      mkpart primary ext4 {swap_end}MiB {linux_root_end}MiB""")
   else:
     os.system(f"""
       parted --script {disk} \
       mklabel msdos \
       mkpart primary ext4 1MiB 101MiB \
       set 1 boot on \
-      mkpart primary ext4 101MiB 100%""")
+      mkpart primary ext4 101MiB {linux_root_end}MiB""")
 
 else: # UEFI
   if(use_swap):
@@ -59,7 +59,7 @@ else: # UEFI
       mklabel gpt \
       mkpart primary fat32 1MiB 261MiB \
       set 1 esp on \
-      mkpart primary ext4 261MiB 100%""")
+      mkpart primary ext4 261MiB {linux_root_end}MiB""")
 
 
 print("--- Formatting partitions ---")
