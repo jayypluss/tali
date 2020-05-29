@@ -20,6 +20,8 @@ fw_interface = get_firmware_interface()
 
 swap_end = 5000
 
+linux_root_end = 260000
+
 if(fw_interface == "BIOS"):
   swap_end += 101 # 100 MiB
 else: #UEFI
